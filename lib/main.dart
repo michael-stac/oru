@@ -6,11 +6,13 @@ import 'package:provider/provider.dart';
 import 'Providers/bottom_nav_provider.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  //
-  // await Firebase.initializeApp();
-
+  initDependencies();
   runApp(const MyApp());
+}
+
+Future<void> initDependencies() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 }
 
 class MyApp extends StatelessWidget {
