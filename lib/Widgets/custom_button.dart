@@ -5,21 +5,31 @@ import '../Screens/Styles/colors.dart';
 Widget customButton(BuildContext context,
     {required VoidCallback onTap,
     required String text,
+    bool isLoading = false,
     Color? bgColor,
     Color? textColor}) {
   return GestureDetector(
-    onTap: onTap,
+    onTap: isLoading ? () {} : onTap,
     child: Container(
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(20),
+        height: 50,
+        // padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            color: bgColor ?? AppColor.white,
+            color: isLoading
+                ? AppColor.primaryColor.withOpacity(0.7)
+                : bgColor ?? AppColor.white,
             borderRadius: BorderRadius.circular(8)),
-        child: Text(
-          text,
-          style: TextStyle(
-              color: textColor ?? AppColor.primaryColor, fontFamily: ''),
-        )),
+        child: isLoading
+            ? SizedBox(
+                height: 25,
+                width: 25,
+                child: CircularProgressIndicator(color: AppColor.white),
+              )
+            : Text(
+                text,
+                style: TextStyle(
+                    color: textColor ?? AppColor.primaryColor, fontFamily: ''),
+              )),
   );
 }

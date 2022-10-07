@@ -1,18 +1,22 @@
+import 'dart:developer';
+
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_text_form_field/flutter_text_form_field.dart';
+import 'package:gigi/Models/user_model.dart';
+import 'package:gigi/Services/db_service.dart';
+import 'package:gigi/Widgets/custom_notification.dart';
 
 import '../../../Utils/router.dart';
 import '../../../Widgets/custom_button.dart';
 import '../../../Widgets/custom_text_formfield.dart';
 import '../../../main_activity.dart';
-import '../../BottomNavPages/Home/home.dart';
 import '../../Styles/colors.dart';
 
-
-
 class CreateProfile extends StatefulWidget {
-  const CreateProfile({Key? key}) : super(key: key);
+  const CreateProfile({Key? key, required this.userId}) : super(key: key);
+
+  final String userId;
 
   @override
   State<CreateProfile> createState() => _CreateProfileState();
@@ -31,10 +35,13 @@ class _CreateProfileState extends State<CreateProfile> {
   late MultiValueDropDownController _cntMulti;
   final TextEditingController _businessSector = TextEditingController();
 
-
-
   ///Form Key
   final GlobalKey<FormState> _formKey = GlobalKey();
+
+  String occupationStatus = '';
+  String gender = '';
+
+  bool isLoading = false;
 
   bool isVisible = false;
   @override
@@ -45,15 +52,13 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   @override
-
   void initState() {
     _cnt = SingleValueDropDownController();
     _cntMulti = MultiValueDropDownController();
     super.initState();
   }
+
   @override
-
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
@@ -163,8 +168,8 @@ class _CreateProfileState extends State<CreateProfile> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: const Text(
                       "Occupation Status",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   Form(
@@ -173,43 +178,42 @@ class _CreateProfileState extends State<CreateProfile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         DropDownTextField(
-                          clearOption: true,
-                          textFieldDecoration:InputDecoration(
-                            hintStyle: TextStyle(fontSize: 12, color: AppColor.quickSilver),
-
+                          // clearOption: true,
+                          textFieldDecoration: InputDecoration(
+                            hintStyle: TextStyle(
+                                fontSize: 12, color: AppColor.quickSilver),
                             hintText: '-select ocupatiion status-',
-                            contentPadding:  const EdgeInsets.all(17),
+                            contentPadding: const EdgeInsets.all(17),
                             focusedBorder: OutlineInputBorder(
-                                borderSide:   BorderSide(
+                                borderSide: BorderSide(
                                   color: AppColor.quickSilver,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(10)),
-
                             enabledBorder: OutlineInputBorder(
-                                borderSide:   BorderSide(
+                                borderSide: BorderSide(
                                   color: AppColor.quickSilver,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(10)),
-
-                          ) ,
-                          textFieldFocusNode: textFieldFocusNode,
-                          searchFocusNode: searchFocusNode,
+                          ),
+                          // textFieldFocusNode: textFieldFocusNode,
+                          // searchFocusNode: searchFocusNode,
                           // searchAutofocus: true,
-                          dropDownItemCount: 8,
-                          searchShowCursor: false,
-                          enableSearch: false,
-                          searchKeyboardType: TextInputType.text,
-                          dropDownList: const [
-                            DropDownValueModel(name: 'name5', value: "value5"),
-                            DropDownValueModel(name: 'name6', value: "value6"),
-                            DropDownValueModel(name: 'name7', value: "value7"),
-                            DropDownValueModel(name: 'name8', value: "value8"),
-                          ],
-                          onChanged: (val) {},
-                        ),
+                          // dropDownItemCount: 8,
+                          // searchShowCursor: false,
+                          // enableSearch: false,
+                          // searchKeyboardType: TextInputType.text,
 
+                          dropDownList: const [
+                            DropDownValueModel(
+                                name: OcupationStatus.unemployed,
+                                value: OcupationStatus.unemployed),
+                          ],
+                          onChanged: (val) {
+                            occupationStatus = val == '' ? '' : val.name;
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -222,8 +226,8 @@ class _CreateProfileState extends State<CreateProfile> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: const Text(
                       "Gender",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   Form(
@@ -232,26 +236,24 @@ class _CreateProfileState extends State<CreateProfile> {
                       children: [
                         DropDownTextField(
                           clearOption: true,
-                          textFieldDecoration:InputDecoration(
-                            hintStyle: TextStyle(fontSize: 12, color: AppColor.quickSilver),
-
+                          textFieldDecoration: InputDecoration(
+                            hintStyle: TextStyle(
+                                fontSize: 12, color: AppColor.quickSilver),
                             hintText: '-select gender-',
-                            contentPadding:  const EdgeInsets.all(17),
+                            contentPadding: const EdgeInsets.all(17),
                             focusedBorder: OutlineInputBorder(
-                                borderSide:   BorderSide(
+                                borderSide: BorderSide(
                                   color: AppColor.quickSilver,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(10)),
-
                             enabledBorder: OutlineInputBorder(
-                                borderSide:   BorderSide(
+                                borderSide: BorderSide(
                                   color: AppColor.quickSilver,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(10)),
-
-                          ) ,
+                          ),
                           textFieldFocusNode: textFieldFocusNode,
                           searchFocusNode: searchFocusNode,
                           // searchAutofocus: true,
@@ -260,14 +262,15 @@ class _CreateProfileState extends State<CreateProfile> {
                           enableSearch: false,
                           searchKeyboardType: TextInputType.text,
                           dropDownList: const [
-                            DropDownValueModel(name: 'name5', value: "value5"),
-                            DropDownValueModel(name: 'name6', value: "value6"),
-                            DropDownValueModel(name: 'name7', value: "value7"),
-                            DropDownValueModel(name: 'name8', value: "value8"),
+                            DropDownValueModel(
+                                name: Gender.male, value: Gender.male),
+                            DropDownValueModel(
+                                name: Gender.female, value: Gender.female),
                           ],
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            gender = val == '' ? '' : val.name;
+                          },
                         ),
-
                       ],
                     ),
                   ),
@@ -299,19 +302,19 @@ class _CreateProfileState extends State<CreateProfile> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: const Text(
                       "Business Name",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   Visibility(
-                      visible: isVisible,
-                      child:  CustomTextField(
-                        _businessName,
-                        hint: "Your business name",
-                        password: false,
-                        backgroundColor: Colors.transparent,
-                        border: Border.all(color: AppColor.gray),
-                      ),
+                    visible: isVisible,
+                    child: CustomTextField(
+                      _businessName,
+                      hint: "Your business name",
+                      password: false,
+                      backgroundColor: Colors.transparent,
+                      border: Border.all(color: AppColor.gray),
+                    ),
                   ),
                   Visibility(
                     visible: isVisible,
@@ -320,6 +323,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   Visibility(
                     visible: isVisible,
                     child: customTextField(
+                      controller: _businessSector,
                       title: 'Business Sector',
                       hintText: 'Event Center',
                     ),
@@ -346,8 +350,8 @@ class _CreateProfileState extends State<CreateProfile> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: const Text(
                       "Address",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   CustomTextField(
@@ -355,7 +359,6 @@ class _CreateProfileState extends State<CreateProfile> {
                     hint: "Your address",
                     password: false,
                     backgroundColor: Colors.transparent,
-
                     border: Border.all(color: AppColor.gray),
                   ),
                   const SizedBox(
@@ -366,8 +369,8 @@ class _CreateProfileState extends State<CreateProfile> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: const Text(
                       "City",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   CustomTextField(
@@ -375,8 +378,6 @@ class _CreateProfileState extends State<CreateProfile> {
                     hint: "Your city",
                     password: false,
                     backgroundColor: Colors.transparent,
-
-
                     border: Border.all(color: AppColor.gray),
                   ),
                   const SizedBox(
@@ -387,8 +388,8 @@ class _CreateProfileState extends State<CreateProfile> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: const Text(
                       "State/Province",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   CustomTextField(
@@ -397,7 +398,6 @@ class _CreateProfileState extends State<CreateProfile> {
                     readOnly: true,
                     password: false,
                     backgroundColor: AppColor.gray,
-
                     border: Border.all(color: AppColor.gray),
                   ),
                   const SizedBox(
@@ -408,8 +408,8 @@ class _CreateProfileState extends State<CreateProfile> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: const Text(
                       "Country",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   CustomTextField(
@@ -418,7 +418,6 @@ class _CreateProfileState extends State<CreateProfile> {
                     readOnly: true,
                     password: false,
                     backgroundColor: AppColor.gray,
-
                     border: Border.all(color: AppColor.gray),
                   ),
 
@@ -426,14 +425,12 @@ class _CreateProfileState extends State<CreateProfile> {
                     height: 56,
                   ),
                   customButton(
+                    isLoading: isLoading,
                     bgColor: AppColor.primaryColor,
                     context,
-                    onTap: () {
-                      nextPage(context, page:  MainActivityPage());
-
-                    },
+                    onTap: _handleProfile,
                     text: 'SAVE CHANGES',
-                    textColor: AppColor.white
+                    textColor: AppColor.white,
                   ),
 
                   const SizedBox(height: 20)
@@ -444,5 +441,35 @@ class _CreateProfileState extends State<CreateProfile> {
         ],
       ),
     );
+  }
+
+  void _handleProfile() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    String accType = AccountType.individual;
+    if (isVisible) {
+      accType = AccountType.business;
+    }
+
+    final profile = UserProfile(
+      accountType: accType,
+      ocupationStatus: occupationStatus,
+      gender: gender,
+      address: _address.text.trim(),
+      city: _city.text.trim(),
+      businessName: _businessName.text.trim(),
+      businessSector: _businessSector.text.trim(),
+    );
+
+    setState(() => isLoading = true);
+
+    final status =
+        await FDatabase.addUserProfile(profile: profile, userId: widget.userId);
+    showCustomNotification(context, status.message);
+    setState(() => isLoading = false);
+    if (status.isSuccess) {
+      nextPageOnly(context, page: MainActivityPage());
+    }
   }
 }

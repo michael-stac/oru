@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_text_form_field/flutter_text_form_field.dart';
+import 'package:gigi/Screens/otp_page.dart';
+import 'package:gigi/Services/auth_service.dart';
+import 'package:gigi/Services/otp_service.dart';
+import 'package:gigi/Widgets/custom_notification.dart';
 
 import '../../Providers/authentication_provider.dart';
 import '../../Utils/router.dart';
@@ -31,6 +35,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   ///Form Key
   final GlobalKey<FormState> _formKey = GlobalKey();
+
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +46,8 @@ class _RegisterPageState extends State<RegisterPage> {
             SliverToBoxAdapter(
               child: Container(
                 height: MediaQuery.of(context).size.height - 20,
-                padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 23, vertical: 20),
                 child: Form(
                   key: _formKey,
                   child: Center(
@@ -64,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               height: 5,
                             ),
                             Text(
-                              "Sign up to be a part of a clean plastic-free environment",
+                              "Sign up to start your wonderfull journey",
                               // textAlign: TextAlign.center,
                               style: TextStyle(color: AppColor.gray),
                             ),
@@ -115,7 +122,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             CustomTextField(
                               _email,
-                              
                               hint: "Email@email.com",
                               password: false,
                               backgroundColor: Colors.transparent,
@@ -199,17 +205,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
                         //RegisterPage Button
                         customButton(
+                          isLoading: isLoading,
                           context,
                           text: 'SIGN UP',
                           textColor: AppColor.white,
-                          onTap: () {
-                            nextPage(context, page: const CreateProfile());
-
-
-                          },
+                          onTap: _handleRegister,
                           bgColor: AppColor.primaryColor,
-
-
                         ),
 
                         //Already have an account
@@ -249,9 +250,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Column(
                             children: [
                               SocialButton(
-                                onTap: () {
-
-                                },
+                                  onTap: () {},
                                   // onTap: () {
                                   //   AuthenticationProvider()
                                   //       .signInWithGoogle()
@@ -342,5 +341,30 @@ class _RegisterPageState extends State<RegisterPage> {
       widget = Text("");
     }
     return widget;
+  }
+
+  void _handleRegister() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    if (!_isChecked) {
+      showCustomNotification(context, 'Agree to terms and coditions');
+      return;
+    }
+
+    setState(() => isLoading = true);
+    final status = await FAuth.signUpWithEmailAndPassword(
+      email: _email.text.trim(),
+      password: _password.text.trim(),
+      name: _username.text.trim(),
+    );
+
+    showCustomNotification(context, status.message);
+    if (status.isSuccess) {
+      await OtpService.sendOtp(userEmail: _email.text.trim());
+      showCustomNotification(context, 'Otp has been sent to your email');
+      nextPage(context, page: OtpPage(userId: status.content));
+    }
+    setState(() => isLoading = false);
   }
 }
