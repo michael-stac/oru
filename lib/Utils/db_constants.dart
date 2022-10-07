@@ -17,4 +17,16 @@ class DbConstants {
   static const city = 'city';
   static const state = 'state';
   static const country = 'country';
+
+  // Jobb DbFiedls
+  static const jobPath = 'Jobs';
+
+  static const jobTitle = 'title';
+  static const jobCompanyName = 'company_name';
+  static const jobLocation = 'location';
+  static const jobSalaryPerHour = 'salary_per_hour';
+  static const jobType = 'job_type';
+  static const jobCompanyLogo = 'company_logo';
+  static const jobHomeScreenRole = 'home_screen_role';
+  static const jobRequirements = 'requirements';
 }

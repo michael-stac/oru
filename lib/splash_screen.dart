@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:gigi/Providers/db_provider.dart';
+import 'package:gigi/main_activity.dart';
+import 'package:provider/provider.dart';
 
 import 'Screens/Styles/colors.dart';
 import 'Screens/boardingPackage/intro_page.dart';
@@ -19,8 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    initalizeUser();
-    navigate();
+    initalizeUser().then((value) => navigate());
   }
 
   @override
@@ -36,15 +38,22 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   // TODO: implement init users
-  initalizeUser() {
-    log('User in Splash ${FirebaseAuth.instance.currentUser.toString()}');
+  Future initalizeUser() async {
+    final dbProvider = Provider.of<DbProvider>(context, listen: false);
+    if (FirebaseAuth.instance.currentUser != null) {
+      await dbProvider.setCurrentUser();
+    }
   }
 
   // TODO: has user seen onboarding screen
 
   void navigate() {
     Future.delayed(const Duration(seconds: 3), () {
-      nextPageOnly(context, page: Intro());
+      if (FirebaseAuth.instance.currentUser == null) {
+        nextPageOnly(context, page: Intro());
+      } else {
+        nextPageOnly(context, page: MainActivityPage());
+      }
     });
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gigi/Screens/BottomNavPages/Settings/settings.dart';
+import 'package:gigi/Utils/router.dart';
+import 'package:gigi/add_job_page.dart';
 
 import 'package:provider/provider.dart';
 
@@ -28,7 +30,7 @@ class _MainActivityPageState extends State<MainActivityPage> {
   ///bottom nav pages
   List<Widget> bottomNavPages = [
     const HomePage(),
-     const Applications(),
+    const Applications(),
     const ReviewPage(),
     const SettingsPage()
   ];
@@ -44,7 +46,6 @@ class _MainActivityPageState extends State<MainActivityPage> {
     return Consumer<ModelProviders>(builder: (context, counter, child) {
       return Scaffold(
         backgroundColor: AppColor.white,
-
         appBar: counter.bottomCounter != 0
             ? null
             : AppBar(
@@ -53,6 +54,12 @@ class _MainActivityPageState extends State<MainActivityPage> {
                 backgroundColor: AppColor.white,
                 automaticallyImplyLeading: false,
                 actions: [
+                  IconButton(
+                      onPressed: () => nextPage(context, page: AddJobPage()),
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.black,
+                      )),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: GestureDetector(
@@ -103,4 +110,3 @@ class _MainActivityPageState extends State<MainActivityPage> {
     });
   }
 }
-
