@@ -12,7 +12,7 @@ Widget customButton(BuildContext context,
     child: Container(
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             color: bgColor ?? AppColor.white,
             borderRadius: BorderRadius.circular(8)),
