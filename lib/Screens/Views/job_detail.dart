@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gigi/Utils/router.dart';
 
+import '../Authentication/CreateProfile/application_profile.dart';
 import 'data.dart';
 
 class JobDetail extends StatelessWidget {
@@ -174,21 +176,26 @@ class JobDetail extends StatelessWidget {
                   ),
 
                   Expanded(
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.red[500],
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                    child: GestureDetector(
+                      onTap: () {
+                        nextPageOnly(context, page: const  ApplocationProfile());
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.red[500],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Apply Now",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        child: Center(
+                          child: Text(
+                            "Apply Now",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
