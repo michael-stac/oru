@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../Widgets/custom_button.dart';
 import '../../Styles/colors.dart';
 
 class Applications extends StatefulWidget {
@@ -551,10 +550,6 @@ class _ApplicationsState extends State<Applications> {
                   const SizedBox(
                     height: 20,
                   ),
-                  customButton(context,
-                      textColor: AppColor.white,
-                      bgColor: AppColor.primaryColor,
-                      onTap: () {}, text: 'Submit')
                 ],
               ),
             ),
