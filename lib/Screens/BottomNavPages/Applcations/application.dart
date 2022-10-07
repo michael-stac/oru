@@ -1,159 +1,559 @@
 import 'package:flutter/material.dart';
 
 import '../../Styles/colors.dart';
-import '../../Views/data.dart';
 
 class Applications extends StatefulWidget {
-  const Applications({super.key});
+  const Applications({Key? key}) : super(key: key);
 
   @override
-  _ApplicationsState createState() => _ApplicationsState();
+  State<Applications> createState() => _ApplicationsState();
 }
 
 class _ApplicationsState extends State<Applications> {
-  List<Application> applications = getApplications();
+  bool _value = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        backgroundColor: AppColor.white,
-        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: const  Text(
+          "Mentorship Hub",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
+          ),
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+            color: Colors.black,
+          ),
+        ),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  right: 32, left: 32, top: 8, bottom: 32),
-              child: Text(
-                "Your \napplications (${applications.length})",
-                style: const TextStyle(
-                    fontSize: 32, fontWeight: FontWeight.bold, height: 1.2),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 32, left: 32, bottom: 8),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 20),
               child: Column(
-                children: buildApplications(),
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: const Text(
+                      "Select a profile",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 185,
+                        height: 185,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              shape: BoxShape.rectangle,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black38,
+                                  blurRadius: 25.0,
+                                )
+                              ]),
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: const EdgeInsets.only(left: 120, top: 19),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _value = !_value;
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.blue),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: _value
+                                            ? const Icon(
+                                                Icons.check,
+                                                size: 10.0,
+                                                color: Colors.white,
+                                              )
+                                            : const Icon(
+                                                Icons.check_box_outline_blank,
+                                                size: 10.0,
+                                                color: Colors.blue,
+                                              ),
+                                      ),
+                                    ),
+                                  )),
+                              const Image(
+                                  image:
+                                      AssetImage("assets/images/mentor.png")),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Text(
+                                "Haley Jessica",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColor.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 9,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "UX Designer",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: AppColor.gray,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Image(
+                                      image:
+                                          AssetImage("assets/images/tick.png"))
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 185,
+                        height: 185,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              shape: BoxShape.rectangle,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black38,
+                                  blurRadius: 25.0,
+                                )
+                              ]),
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: const EdgeInsets.only(left: 120, top: 19),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _value = !_value;
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border:
+                                          Border.all(color: Colors.grey)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: _value
+                                            ? const Icon(
+                                          Icons.check,
+                                          size: 10.0,
+                                          color: Colors.white,
+                                        )
+                                            : const Icon(
+                                          Icons.check_box_outline_blank,
+                                          size: 10.0,
+                                          color: Color(0xff5386E4),
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                              const Image(
+                                  image:
+                                      AssetImage("assets/images/richard.png")),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Text(
+                                "Richard Tams",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColor.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 9,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Front end Developer",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: AppColor.gray,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Image(
+                                      image:
+                                          AssetImage("assets/images/tick.png"))
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 185,
+                        height: 185,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              shape: BoxShape.rectangle,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black38,
+                                  blurRadius: 25.0,
+                                )
+                              ]),
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: const EdgeInsets.only(left: 120, top: 19),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _value = !_value;
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border:
+                                              Border.all(color: Colors.grey)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: _value
+                                            ? const Icon(
+                                                Icons.check,
+                                                size: 10.0,
+                                                color: Colors.white,
+                                              )
+                                            : const Icon(
+                                                Icons.check_box_outline_blank,
+                                                size: 10.0,
+                                                color: Color(0xff5386E4),
+                                              ),
+                                      ),
+                                    ),
+                                  )),
+                              const Image(
+                                  image:
+                                      AssetImage("assets/images/wisdom.png")),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Text(
+                                "Wisdom Nwo..",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColor.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 9,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Backend developer",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: AppColor.gray,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Image(
+                                      image:
+                                          AssetImage("assets/images/tick.png"))
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 185,
+                        height: 185,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              shape: BoxShape.rectangle,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black38,
+                                  blurRadius: 25.0,
+                                )
+                              ]),
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: const EdgeInsets.only(left: 120, top: 19),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _value = !_value;
+                                      });
+                                    },
+                                    child:  Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border:
+                                          Border.all(color: Colors.grey)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: _value
+                                            ? const Icon(
+                                          Icons.check,
+                                          size: 10.0,
+                                          color: Colors.white,
+                                        )
+                                            : const Icon(
+                                          Icons.check_box_outline_blank,
+                                          size: 10.0,
+                                          color: Color(0xff5386E4),
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                              const Image(
+                                  image:
+                                      AssetImage("assets/images/gills.png")),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Text(
+                                "Sokari Gills",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColor.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 9,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Data Scientist",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: AppColor.gray,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Image(
+                                      image:
+                                          AssetImage("assets/images/tick.png"))
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 185,
+                        height: 185,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              shape: BoxShape.rectangle,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black38,
+                                  blurRadius: 25.0,
+                                )
+                              ]),
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: const EdgeInsets.only(left: 120, top: 19),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _value = !_value;
+                                      });
+                                    },
+                                    child:  Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border:
+                                          Border.all(color: Colors.grey)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: _value
+                                            ? const Icon(
+                                          Icons.check,
+                                          size: 10.0,
+                                          color: Colors.white,
+                                        )
+                                            : const Icon(
+                                          Icons.check_box_outline_blank,
+                                          size: 10.0,
+                                          color: Color(0xff5386E4),
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                              const Image(
+                                  image:
+                                      AssetImage("assets/images/ebun.png")),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Text(
+                                "Cynthia Ebun",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColor.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 9,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Project Manager",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: AppColor.gray,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Image(
+                                      image:
+                                          AssetImage("assets/images/tick.png"))
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 185,
+                        height: 185,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              shape: BoxShape.rectangle,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black38,
+                                  blurRadius: 25.0,
+                                )
+                              ]),
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: const EdgeInsets.only(left: 120, top: 19),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _value = !_value;
+                                      });
+                                    },
+                                    child:  Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border:
+                                          Border.all(color: Colors.grey)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: _value
+                                            ? const Icon(
+                                          Icons.check,
+                                          size: 10.0,
+                                          color: Colors.white,
+                                        )
+                                            : const Icon(
+                                          Icons.check_box_outline_blank,
+                                          size: 10.0,
+                                          color: Color(0xff5386E4),
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                              const Image(
+                                  image:
+                                      AssetImage("assets/images/muna.png")),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Text(
+                                "Mercy Muna",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColor.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 9,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Product Manager",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: AppColor.gray,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Image(
+                                      image:
+                                          AssetImage("assets/images/tick.png"))
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  List<Widget> buildApplications() {
-    List<Widget> list = [];
-    for (var i = 0; i < applications.length; i++) {
-      list.add(buildApplication(applications[i]));
-    }
-    return list;
-  }
-
-  Widget buildApplication(Application application) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                height: 60,
-                width: 60,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(application.logo),
-                    fit: BoxFit.fitWidth,
-                  ),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-              ),
-              Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      application.position,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      application.company,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              )),
-              const Icon(
-                Icons.more_vert,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      application.status,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: application.status == "Opened"
-                            ? Colors.green[500]
-                            : application.status == "Cancelled"
-                                ? Colors.red[500]
-                                : Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    r"$" + application.price + "/h",
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          )
         ],
       ),
     );

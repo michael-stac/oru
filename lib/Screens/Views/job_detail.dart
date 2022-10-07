@@ -168,16 +168,6 @@ class JobDetail extends StatelessWidget {
               Row(
                 children: [
 
-                  Container(
-                    height: 60,
-                    width: 60,
-                    child: Center(
-                      child: Icon(
-                        Icons.favorite_border,
-                        size: 28,
-                      ),
-                    ),
-                  ),
 
                   SizedBox(
                     width: 16,
