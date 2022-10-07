@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../Widgets/custom_button.dart';
 import '../../Styles/colors.dart';
 
 class ApplocationProfile extends StatefulWidget {
@@ -37,7 +38,7 @@ class _ApplocationProfileState extends State<ApplocationProfile> {
         slivers: [
           SliverToBoxAdapter(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 23),
+              padding:  EdgeInsets.symmetric(horizontal: 22, vertical: 23),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -318,6 +319,12 @@ class _ApplocationProfileState extends State<ApplocationProfile> {
 
                     ),
                   ),
+                  const SizedBox(height: 20,),
+                  customButton(context,
+                      textColor: AppColor.white,
+                      bgColor: AppColor.primaryColor,
+                      onTap: () {}, text: 'Submit')
+
                 ],
               ),
             ),
