@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gigi/Screens/BottomNavPages/ReviewPages/messages.dart';
 import 'package:gigi/Screens/BottomNavPages/Settings/settings.dart';
 
 import 'package:provider/provider.dart';
@@ -6,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'Providers/bottom_nav_provider.dart';
 import 'Screens/BottomNavPages/Applcations/application.dart';
 import 'Screens/BottomNavPages/Home/home.dart';
-import 'Screens/BottomNavPages/ReviewPage/reviewpage.dart';
+
 import 'Screens/Styles/colors.dart';
 
 class MainActivityPage extends StatefulWidget {
@@ -29,7 +30,7 @@ class _MainActivityPageState extends State<MainActivityPage> {
   List<Widget> bottomNavPages = [
     const HomePage(),
      const Applications(),
-    const ReviewPage(),
+    const Messages(),
     const SettingsPage()
   ];
 
