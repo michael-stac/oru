@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gigi/Widgets/custom_button.dart';
 
 import '../../Styles/colors.dart';
 
@@ -10,24 +11,11 @@ class ReviewPage extends StatefulWidget {
 }
 
 class _ReviewPageState extends State<ReviewPage> {
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColor.white,
-      ),
-      body: const CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Center(
-              child: Text("REVIEW"),
-            ),
-          )
-        ],
-      ),
+
     );
   }
 }

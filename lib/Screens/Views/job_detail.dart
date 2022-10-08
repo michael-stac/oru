@@ -155,7 +155,7 @@ class JobDetail extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        nextPageOnly(context, page: const ApplocationProfile());
+                        nextPageOnly(context, page: const  EditProfile());
                       },
                       child: Container(
                         height: 60,

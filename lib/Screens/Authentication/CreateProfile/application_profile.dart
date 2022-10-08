@@ -1,333 +1,304 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_text_form_field/flutter_text_form_field.dart';
+import 'package:image_picker/image_picker.dart';
+
+
+import '../../../Utils/image_picker.dart';
 import '../../../Widgets/custom_button.dart';
 import '../../Styles/colors.dart';
 
-class ApplocationProfile extends StatefulWidget {
-  const ApplocationProfile({Key? key}) : super(key: key);
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
-  State<ApplocationProfile> createState() => _ApplocationProfileState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _ApplocationProfileState extends State<ApplocationProfile> {
+class _EditProfileState extends State<EditProfile> {
+  final TextEditingController _address = TextEditingController();
+  final TextEditingController _city = TextEditingController();
+  final TextEditingController _province = TextEditingController();
+  final TextEditingController _country = TextEditingController();
+  final TextEditingController _gender = TextEditingController();
+
+  String path = '';
+  bool isVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColor.white,
         elevation: 0,
-        leading: const BackButton(
-          color: Colors.black,
+        leading: BackButton(
+          color: AppColor.black,
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(18.0),
-            child: Text(
-              "Edit",
-              style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 16,
-                  color: Colors.grey),
-            ),
-          )
-        ],
       ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Container(
-              padding:  EdgeInsets.symmetric(horizontal: 22, vertical: 23),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    child: Column(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 30),
+                    path == ''
+                        ? const CircleAvatar(
+                        radius: 60,
+                        backgroundImage:
+                        AssetImage('assets/images/edit.png'))
+                        : CircleAvatar(
+                        radius: 60, backgroundImage: FileImage(File(path))),
+                    const SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          context: context,
+                          builder: (context) => Container(
+                            color: Colors.transparent,
+                            height: 200,
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 14,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: AppColor.gray,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(24))),
+                                  padding: const EdgeInsets.only(
+                                      top: 14, bottom: 14),
+                                  width: 300,
+                                  child: Column(
+                                    children: [
+                                      GestureDetector(
+                                        child: Text(
+                                          "Take photo from camera",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14,
+                                              color: AppColor.white),
+                                        ),
+                                        onTap: () {
+                                          OpenCamera()
+                                              .pickCamera()
+                                              .then((value) {
+                                            if (value != '') {
+                                              path = value;
+                                              setState(() {});
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      Divider(
+                                        thickness: 0.5,
+                                        color: AppColor.white,
+                                        height: 27,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          OpenCamera()
+                                              .pickCamera(
+                                              source: ImageSource.gallery)
+                                              .then((value) {
+                                            if (value != '') {
+                                              path = value;
+                                              setState(() {});
+                                            }
+                                          });
+                                        },
+                                        child: Text(
+                                          "Choose from Photos",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14,
+                                              color: AppColor.white),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(14),
+                                    alignment: Alignment.center,
+                                    width: 300,
+                                    decoration: BoxDecoration(
+                                        color: AppColor.gray,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(14))),
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                          color: AppColor.white),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Upload profile photo',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.blue),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    const SizedBox(height: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Image(image: AssetImage("assets/images/wisdom.png")),
                         Text(
-                          "Wisdom Nwo..",
+                          'Create a Profile',
                           style: TextStyle(
-                              fontSize: 15,
-                              color: AppColor.black,
-                              fontWeight: FontWeight.bold),
+                              color: AppColor.primaryColor,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500),
                         ),
+                        Text(
+                          'Complete your registration to continue',
+                          style: TextStyle(
+                              color: AppColor.gray,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(height: 30),
+                        Text(
+                          'Contact information',
+                          style: TextStyle(
+                              color: AppColor.gray,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
+
+
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: const Text(
+                            "Gender",
+                            style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        CustomTextField(
+                          _gender,
+                          hint: "Your address",
+                          password: false,
+                          backgroundColor: Colors.transparent,
+                          border: Border.all(color: AppColor.gray),
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: const Text(
+                            "Address",
+                            style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        CustomTextField(
+                          _address,
+                          hint: "Your address",
+                          password: false,
+                          backgroundColor: Colors.transparent,
+                          border: Border.all(color: AppColor.gray),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: const Text(
+                            "City",
+                            style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        CustomTextField(
+                          _city,
+                          hint: "Your city",
+                          password: false,
+                          backgroundColor: Colors.transparent,
+                          border: Border.all(color: AppColor.gray),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: const Text(
+                            "State/Province",
+                            style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        CustomTextField(
+                          _province,
+                          hint: "Your city",
+                          password: false,
+                          backgroundColor: Colors.transparent,
+                          border: Border.all(color: AppColor.gray),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: const Text(
+                            "Country",
+                            style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        CustomTextField(
+                          _country,
+                          hint: "Your city",
+                          password: false,
+                          backgroundColor: Colors.transparent,
+                          border: Border.all(color: AppColor.gray),
+                        ),
+
+
+
+                        const SizedBox(height: 20)
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 9,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Backend developer",
-                        style: TextStyle(
-                            fontSize: 10,
-                            color: AppColor.gray,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Image(image: AssetImage("assets/images/tick.png"))
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "About",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: AppColor.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const Text(
-                            "Edit",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16,
-                                color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            shape: BoxShape.rectangle,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black38,
-                                blurRadius: 10.0,
-                              )
-                            ]),
-                        child: const Text(
-                            "Creative UX Designer with 6+ years of experience in optimizing user experience through innovative solutions and dynamic interface designs. Successful in enhancing user engagement for well-known brands, providing a compelling user experience to improve brand loyalty and customer retention. ", style: TextStyle(fontSize: 14,  fontWeight: FontWeight.w900, color: Colors.grey),),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Experience",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: AppColor.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Text(
-                        "See all",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 16,
-                            color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10,),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        shape: BoxShape.rectangle,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black38,
-                            blurRadius: 10.0,
-                          )
-                        ]),
-                    child: ListTile(
-                      tileColor: Colors.white38,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      contentPadding: const EdgeInsets.all(12),
-                      leading: const Image(image: AssetImage("assets/images/olutu.png")),
-                      title: Text(
-                        "UX Intern",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: AppColor.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      subtitle:  const Text(
-                        "Olotu Square",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 12,
-                            color: Colors.grey),
-                      ),
-                      trailing: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Port Harcourt, NG",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: AppColor.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const Text(
-                              "Dec 20 - Feb 21",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 12,
-                                  color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Education",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: AppColor.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Text(
-                        "See all",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 16,
-                            color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10,),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        shape: BoxShape.rectangle,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black38,
-                            blurRadius: 10.0,
-                          )
-                        ]),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      contentPadding: const EdgeInsets.all(12),
-                      leading: const Image(image: AssetImage("assets/images/uni.png")),
-                      title: Text(
-                        "Computer Science",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: AppColor.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      subtitle:  const Text(
-                        "Bachelor | Uniport",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 12,
-                            color: Colors.grey),
-                      ),
-                      trailing: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Choba",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: AppColor.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const Text(
-                              "2017 - 2020",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 12,
-                                  color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Resume",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: AppColor.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Text(
-                        "Edit ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 16,
-                            color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20,),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        shape: BoxShape.rectangle,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black38,
-                            blurRadius: 10.0,
-                          )
-                        ]),
-                    child: ListTile(
-                      tileColor: Colors.white38,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      contentPadding: const EdgeInsets.all(12),
-                      leading: const Image(image: AssetImage("assets/images/pot.png")),
-                      title: Text(
-                          "Resume",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: AppColor.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      subtitle:  const Text(
-                        "About Gloria Ojukwu",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 12,
-                            color: Colors.grey),
-                      ),
-
-                    ),
-                  ),
-                  const SizedBox(height: 20,),
-                  customButton(context,
-                      textColor: AppColor.white,
+                    const SizedBox(height: 40),
+                    customButton(
+                      context,
                       bgColor: AppColor.primaryColor,
-                      onTap: () {}, text: 'Submit')
-
-                ],
-              ),
-            ),
+                      textColor: AppColor.white,
+                      onTap: () {},
+                      text: 'SAVE CHANGES',
+                    ),
+                    const SizedBox(height: 30,),
+                  ],
+                )),
           )
         ],
       ),
