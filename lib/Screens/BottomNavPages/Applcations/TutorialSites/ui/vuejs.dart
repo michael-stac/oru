@@ -14,7 +14,11 @@ class _VueJsState extends State<VueJs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: AppColor.white,),
+      backgroundColor: AppColor.white,
+      appBar: AppBar(backgroundColor: AppColor.white,
+        elevation: 0,
+        leading: BackButton(color: Colors.black,),
+      ),
       body: Stack(
         children: [
           Expanded(

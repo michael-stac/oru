@@ -14,6 +14,7 @@ import '../../main_activity.dart';
 import '../Styles/colors.dart';
 
 import 'CreateProfile/profile.dart';
+import 'JobSearch/job_time.dart';
 import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -211,7 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           text: 'SIGN UP',
                           textColor: AppColor.white,
                           onTap: () {
-                            nextPage(context, page: MainActivityPage());
+                            nextPage(context, page: JobType());
                           },
                           bgColor: AppColor.primaryColor,
                         ),

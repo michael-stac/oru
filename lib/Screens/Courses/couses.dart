@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import '../../Utils/router.dart';
+import '../BottomNavPages/Applcations/TutorialSites/ui/dart.dart';
+import '../BottomNavPages/Applcations/TutorialSites/ui/flutter.dart';
+import '../BottomNavPages/Applcations/TutorialSites/ui/javascript.dart';
+import '../BottomNavPages/Applcations/TutorialSites/ui/react.dart';
+import '../BottomNavPages/Applcations/TutorialSites/ui/swift.dart';
+import '../BottomNavPages/Applcations/TutorialSites/ui/uxdesingersite.dart';
+import '../BottomNavPages/Applcations/TutorialSites/ui/vuejs.dart';
 import '../Styles/colors.dart';
 
 class Lesson extends StatefulWidget {
@@ -44,7 +52,9 @@ class _LessonState extends State<Lesson> {
                 SizedBox(height: 10,),
 
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    nextPage(context, page: const UiUxDesigner());
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -108,7 +118,11 @@ class _LessonState extends State<Lesson> {
                 ),
                 SizedBox(height: 10,),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    nextPage(context, page: const Flutter());
+
+
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -164,7 +178,9 @@ class _LessonState extends State<Lesson> {
                 ),
                 SizedBox(height: 15,),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    nextPage(context, page: const Swift());
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -220,7 +236,9 @@ class _LessonState extends State<Lesson> {
                 ),
                 SizedBox(height: 15,),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    nextPage(context, page: const Dart());
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -284,7 +302,9 @@ class _LessonState extends State<Lesson> {
                 ),
                 SizedBox(height: 10,),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    nextPage(context, page: const JavaScript());
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -340,7 +360,9 @@ class _LessonState extends State<Lesson> {
                 ),
                 SizedBox(height: 10,),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    nextPage(context, page: const React());
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -396,7 +418,9 @@ class _LessonState extends State<Lesson> {
                 ),
                 SizedBox(height: 10,),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    nextPage(context, page: const VueJs());
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,

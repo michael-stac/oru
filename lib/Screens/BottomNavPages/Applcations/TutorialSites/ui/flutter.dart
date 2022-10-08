@@ -15,7 +15,11 @@ class _FlutterState extends State<Flutter> {
   Widget build(BuildContext context) {
     double webProgress = 0;
     return Scaffold(
-        appBar: AppBar(backgroundColor: Colors.white,),
+        backgroundColor: AppColor.white,
+        appBar: AppBar(backgroundColor: AppColor.white,
+          elevation: 0,
+          leading: BackButton(color: Colors.black,),
+        ),
         body: Stack(
           children: [
             Expanded(
