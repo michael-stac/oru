@@ -23,12 +23,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColor.white,
-        leading: GestureDetector(
-          onTap: () {},
-          child: const Image(
-            image: AssetImage("assets/images/leading_back.png"),
-          ),
-        ),
+        leading: BackButton(color: AppColor.black,),
       ),
       body: CustomScrollView(
         slivers: [

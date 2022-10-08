@@ -10,6 +10,7 @@ import '../../Utils/router.dart';
 
 import '../../Widgets/custom_button.dart';
 import '../../Widgets/social_button.dart';
+import '../../main_activity.dart';
 import '../Styles/colors.dart';
 
 import 'CreateProfile/profile.dart';
@@ -209,7 +210,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           context,
                           text: 'SIGN UP',
                           textColor: AppColor.white,
-                          onTap: _handleRegister,
+                          onTap: () {
+                            nextPage(context, page: MainActivityPage());
+                          },
                           bgColor: AppColor.primaryColor,
                         ),
 
