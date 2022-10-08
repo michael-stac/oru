@@ -15,18 +15,25 @@ class _MessagesState extends State<Messages> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: Column(
           children: [
+
             Row(
               children: [
                 Text('Messages'),
                 Spacer(),
                 Icon(Icons.search),
                 SizedBox(width: 10),
-                Image.asset('assets/images/edit.png')
+                Image.asset('assets/images/edit.png', height: 30,)
 
               ],
+            ),
+            SizedBox(height: 10),
+            SizedBox(height: 40, child: TextFormField(decoration: InputDecoration(),),),
+            Text('Companies'),
+            Row(
+
             )
           ],
         ),
