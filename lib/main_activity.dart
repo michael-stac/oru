@@ -6,9 +6,10 @@ import 'package:gigi/add_job_page.dart';
 import 'package:provider/provider.dart';
 
 import 'Providers/bottom_nav_provider.dart';
+import 'Screens/Authentication/JobSearch/job_time.dart';
 import 'Screens/BottomNavPages/Applcations/application.dart';
 import 'Screens/BottomNavPages/Home/home.dart';
-import 'Screens/BottomNavPages/ReviewPage/reviewpage.dart';
+
 import 'Screens/Styles/colors.dart';
 
 class MainActivityPage extends StatefulWidget {

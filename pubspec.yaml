@@ -53,6 +53,7 @@ dependencies:
   shared_preferences: ^2.0.15
   cached_network_image: ^3.2.2
   firebase_storage: ^10.3.11
+  webview_flutter_plus: ^0.3.0+2
 
 dev_dependencies:
   flutter_test:

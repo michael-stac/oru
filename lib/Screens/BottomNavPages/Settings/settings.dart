@@ -26,9 +26,6 @@ class _SettingsPageState extends State<SettingsPage> {
           style: TextStyle(
               fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
         ),
-        leading: const Image(
-          image: AssetImage("assets/images/leading_back.png"),
-        ),
         centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: false,
