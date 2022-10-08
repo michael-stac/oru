@@ -41,18 +41,7 @@ class _ApplicationsState extends State<Applications> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 4,),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: const Text(
-                      "Select a profile and get access to certified courses",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
+
                   const SizedBox(
                     height: 20,
                   ),

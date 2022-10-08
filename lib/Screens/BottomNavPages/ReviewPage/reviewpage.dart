@@ -15,6 +15,7 @@ class _ReviewPageState extends State<ReviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: AppColor.white,
       appBar: AppBar(
         elevation: 0,
@@ -149,6 +150,7 @@ class _ReviewPageState extends State<ReviewPage> {
           )
         ],
       ),
+
     );
   }
 }
