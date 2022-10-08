@@ -39,8 +39,39 @@ class FAuth {
     }
   }
 
-  static void logInWithEmailAndPassword({
+  static Future<FAuthResponse> logInWithEmailAndPassword({
     required String email,
     required String password,
-  }) async {}
+  }) async {
+    try {
+      final credential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      final isVerified = await FDatabase.isUserVerified(credential.user!.uid);
+      if (!isVerified.isSuccess && !isVerified.content) {
+        return FAuthResponse(message: isVerified.message);
+      } else if (!isVerified.isSuccess) {
+        return FAuthResponse(message: 'Account not verified', content: {
+          'redirect': true,
+          'userId': credential.user!.uid,
+        });
+      }
+      if (credential.user == null) {
+        return FAuthResponse(message: 'User is null');
+      }
+      return FAuthResponse(
+          message: 'Login Sccessfull',
+          content: credential.user,
+          isSuccess: true);
+    } on FirebaseAuthException catch (authE) {
+      log(authE.toString());
+      return FAuthResponse(message: authE.toString());
+    } catch (e) {
+      log(e.toString());
+      return FAuthResponse(message: e.toString());
+    }
+  }
+
+  static Future logOut() async {
+    await _auth.signOut();
+  }
 }

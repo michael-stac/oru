@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gigi/Utils/router.dart';
-
-import '../Authentication/CreateProfile/application_profile.dart';
-import 'data.dart';
+import 'package:gigi/Models/job_model.dart';
+import 'package:gigi/Screens/Styles/colors.dart';
+import 'package:gigi/Widgets/custom_button.dart';
+import 'package:gigi/Widgets/custom_modal.dart';
 
 class JobDetail extends StatelessWidget {
-  final Job job;
+  final JobModel job;
 
   JobDetail({required this.job});
 
@@ -18,7 +18,7 @@ class JobDetail extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          job.company,
+          job.companyName,
           style: const TextStyle(
             color: Colors.black,
           ),
@@ -42,7 +42,7 @@ class JobDetail extends StatelessWidget {
               topRight: Radius.circular(50),
             )),
         child: Padding(
-          padding: const EdgeInsets.all(40),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -52,7 +52,7 @@ class JobDetail extends StatelessWidget {
                   width: 50,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(job.logo),
+                      image: AssetImage(job.companyLogo),
                       fit: BoxFit.fitWidth,
                     ),
                     borderRadius: const BorderRadius.all(
@@ -61,12 +61,10 @@ class JobDetail extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 32,
-              ),
+              const SizedBox(height: 32),
               Center(
                 child: Text(
-                  job.position,
+                  job.title,
                   style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -78,7 +76,7 @@ class JobDetail extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  job.city,
+                  job.location,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -94,6 +92,9 @@ class JobDetail extends StatelessWidget {
                   Expanded(
                     child: Container(
                       height: 45,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
+                      alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: const BorderRadius.all(
@@ -102,7 +103,7 @@ class JobDetail extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          job.concept,
+                          job.jobType,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -111,10 +112,11 @@ class JobDetail extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
+                  SizedBox(width: 10),
+                  Container(
                     child: Center(
                       child: Text(
-                        r"$" + job.price + "/h",
+                        r"$" + job.salaryPerHour + "/h",
                         style: const TextStyle(
                           fontSize: 36,
                         ),
@@ -136,49 +138,54 @@ class JobDetail extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: buildRequirements(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  height: 260,
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      children: job.requirements
+                          .map((e) => buildRequirement(e))
+                          .toList(),
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        nextPageOnly(context, page: const  EditProfile());
-                      },
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.red[500],
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Apply Now",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              const SizedBox(height: 16),
+              // Row(
+              //   children: [
+              //     const SizedBox(width: 16),
+              //     Expanded(
+              //       child: Container(
+              //         height: 60,
+              //         decoration: BoxDecoration(
+              //           color: Colors.red[500],
+              //           borderRadius: const BorderRadius.all(
+              //             Radius.circular(10),
+              //           ),
+              //         ),
+              //         child: const Center(
+              //           child: Text(
+              //             "Apply Now",
+              //             style: TextStyle(
+              //               fontSize: 18,
+              //               fontWeight: FontWeight.bold,
+              //               color: Colors.white,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+
+              //   ],
+              // ),
+              customButton(
+                context,
+                onTap: () => _handleApply(context),
+                text: 'Apply Now',
+                bgColor: Colors.red[500],
+                textColor: AppColor.white,
               ),
             ],
           ),
@@ -187,13 +194,13 @@ class JobDetail extends StatelessWidget {
     );
   }
 
-  List<Widget> buildRequirements() {
-    List<Widget> list = [];
-    for (var i = 0; i < getJobsRequirements().length; i++) {
-      list.add(buildRequirement(getJobsRequirements()[i]));
-    }
-    return list;
-  }
+  // List<Widget> buildRequirements() {
+  //   List<Widget> list = [];
+  //   for (var i = 0; i < 100; i++) {
+  //     list.add(buildRequirement(getJobsRequirements()[1]));
+  //   }
+  //   return list;
+  // }
 
   Widget buildRequirement(String requirement) {
     return Container(
@@ -224,5 +231,15 @@ class JobDetail extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _handleApply(BuildContext context) {
+    Notifications.showCustomQueryDialogue(
+        context: context,
+        onCancelClicked: () {},
+        onOkClicked: () {},
+        message: 'Are you sure?',
+        subMessage:
+            'Are you sure you want to apply for the ${job.title} role at ${job.companyName}');
   }
 }

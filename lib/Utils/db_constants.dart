@@ -6,6 +6,7 @@ class DbConstants {
   static const id = 'id';
   static const imgUrl = 'img_url';
   static const profile = 'profile';
+  static const mainProfile = 'main_profile';
 
   // User Profile Fields
   static const accountType = 'accountType';
@@ -17,4 +18,23 @@ class DbConstants {
   static const city = 'city';
   static const state = 'state';
   static const country = 'country';
+
+// Main Profile fields
+  static const about = 'about';
+  static const profilePic = 'profile_pic';
+  static const experiences = 'experiences';
+  static const resumes = 'resumes';
+  static const role = 'role';
+
+  // Jobb DbFiedls
+  static const jobPath = 'Jobs';
+
+  static const jobTitle = 'title';
+  static const jobCompanyName = 'company_name';
+  static const jobLocation = 'location';
+  static const jobSalaryPerHour = 'salary_per_hour';
+  static const jobType = 'job_type';
+  static const jobCompanyLogo = 'company_logo';
+  static const jobHomeScreenRole = 'home_screen_role';
+  static const jobRequirements = 'requirements';
 }

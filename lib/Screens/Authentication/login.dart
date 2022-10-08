@@ -1,9 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_text_form_field/flutter_text_form_field.dart';
+import 'package:gigi/Screens/otp_page.dart';
+import 'package:gigi/Services/auth_service.dart';
+import 'package:gigi/Services/otp_service.dart';
+import 'package:gigi/Widgets/custom_notification.dart';
+import 'package:gigi/main_activity.dart';
 
 import 'package:provider/provider.dart';
 
-
+import '../../Providers/db_provider.dart';
 import '../../Utils/message.dart';
 import '../../Utils/router.dart';
 import '../../Widgets/custom_button.dart';
@@ -30,6 +37,8 @@ class _LoginPageState extends State<LoginPage> {
 
   ///Form Key
   GlobalKey<FormState> _formKey = GlobalKey();
+
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,19 +149,12 @@ class _LoginPageState extends State<LoginPage> {
                         ),
 
                         //LoginPage Button
-                        customButton(
-                          context,
-                          text: 'SIGN IN',
-                          textColor: AppColor.white,
-                          bgColor: AppColor.primaryColor,
-                          onTap: () {
-
-                          },
-
-
-                        ),
-
-
+                        customButton(context,
+                            text: 'SIGN IN',
+                            textColor: AppColor.white,
+                            bgColor: AppColor.primaryColor,
+                            onTap: _handleLogin,
+                            isLoading: isLoading),
 
                         //Already have an account
                         Container(
@@ -192,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               SocialButton(
-                                 onTap: () {},
+                                  onTap: () {},
                                   text: "Google",
                                   icon: Image.asset(
                                     "assets/images/google.png",
@@ -270,5 +272,40 @@ class _LoginPageState extends State<LoginPage> {
       widget = Text("");
     }
     return widget;
+  }
+
+  void _handleLogin() async {
+    setState(() => isLoading = true);
+    log('before');
+    final status = await FAuth.logInWithEmailAndPassword(
+        email: _email.text.trim(), password: _password.text.trim());
+    log('Message === ${status.message}');
+    log('Message === ${status.isSuccess}');
+
+    log((!status.isSuccess && status.content != null).toString());
+    if (!status.isSuccess && status.content != null) {
+      log('In here');
+      showCustomNotification(context, status.message);
+      final otpStatus =
+          await OtpService.sendOtp(userEmail: status.content['userId']);
+      if (!otpStatus.isSuccess) {
+        showCustomNotification(context, otpStatus.message);
+        setState(() => isLoading = false);
+
+        return;
+      }
+      showCustomNotification(context, otpStatus.message);
+      setState(() => isLoading = false);
+
+      nextPage(context, page: OtpPage(userId: status.content['userId']));
+    }
+    showCustomNotification(context, status.message);
+    setState(() => isLoading = false);
+
+    if (status.isSuccess) {
+      await Provider.of<DbProvider>(context, listen: false).setCurrentUser();
+
+      nextPageOnly(context, page: MainActivityPage());
+    }
   }
 }
