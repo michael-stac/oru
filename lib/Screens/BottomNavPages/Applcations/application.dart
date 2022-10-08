@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gigi/Utils/router.dart';
 
-import '../../../Widgets/custom_button.dart';
 import '../../Mentors/jessica.dart';
 import '../../Mentors/richard_tams.dart';
 import '../../Styles/colors.dart';
@@ -33,7 +32,7 @@ class _ApplicationsState extends State<Applications> {
                 children: [
                   Container(
                     alignment: Alignment.topLeft,
-                    child: Text(
+                    child: const Text(
                       "Mentorship Hub",
                       style: TextStyle(
                         fontSize: 20,
@@ -42,7 +41,7 @@ class _ApplicationsState extends State<Applications> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 4,),
+                  const SizedBox(height: 4,),
                   Container(
                     alignment: Alignment.topLeft,
                     child: const Text(
@@ -62,7 +61,7 @@ class _ApplicationsState extends State<Applications> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          nextPage(context, page:  JessicaMentor());
+                          nextPage(context, page:  const JessicaMentor());
                         },
                         child: SizedBox(
                           width: 185,
@@ -121,7 +120,7 @@ class _ApplicationsState extends State<Applications> {
                                       color: AppColor.black,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 9,),
+                                const SizedBox(height: 9,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -144,7 +143,7 @@ class _ApplicationsState extends State<Applications> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          nextPage(context, page: RichardTams());
+                          nextPage(context, page: const RichardTams());
                         },
                         child: SizedBox(
                           width: 185,
@@ -204,7 +203,7 @@ class _ApplicationsState extends State<Applications> {
                                       color: AppColor.black,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 9,),
+                                const SizedBox(height: 9,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -291,7 +290,7 @@ class _ApplicationsState extends State<Applications> {
                                     color: AppColor.black,
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 9,),
+                              const SizedBox(height: 9,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -369,7 +368,7 @@ class _ApplicationsState extends State<Applications> {
                                     color: AppColor.black,
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 9,),
+                              const SizedBox(height: 9,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -455,7 +454,7 @@ class _ApplicationsState extends State<Applications> {
                                     color: AppColor.black,
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 9,),
+                              const SizedBox(height: 9,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -533,7 +532,7 @@ class _ApplicationsState extends State<Applications> {
                                     color: AppColor.black,
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 9,),
+                              const SizedBox(height: 9,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

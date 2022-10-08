@@ -19,7 +19,7 @@ class _ReviewPageState extends State<ReviewPage> {
         automaticallyImplyLeading: false,
         backgroundColor: AppColor.white,
       ),
-      body: CustomScrollView(
+      body: const CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Center(
