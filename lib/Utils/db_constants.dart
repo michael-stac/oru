@@ -37,4 +37,5 @@ class DbConstants {
   static const jobCompanyLogo = 'company_logo';
   static const jobHomeScreenRole = 'home_screen_role';
   static const jobRequirements = 'requirements';
+  static const appliedSeekers = 'applied_seekers';
 }

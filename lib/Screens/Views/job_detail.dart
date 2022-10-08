@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gigi/Models/job_model.dart';
+import 'package:gigi/Screens/BottomNavPages/Applcations/job_application.dart';
 import 'package:gigi/Screens/Styles/colors.dart';
 import 'package:gigi/Widgets/custom_button.dart';
 import 'package:gigi/Widgets/custom_modal.dart';
+
+import '../../Utils/router.dart';
 
 class JobDetail extends StatelessWidget {
   final JobModel job;
@@ -237,7 +240,10 @@ class JobDetail extends StatelessWidget {
     Notifications.showCustomQueryDialogue(
         context: context,
         onCancelClicked: () {},
-        onOkClicked: () {},
+        onOkClicked: () => nextPage(context,
+            page: JobApplication(
+              job: job,
+            )),
         message: 'Are you sure?',
         subMessage:
             'Are you sure you want to apply for the ${job.title} role at ${job.companyName}');

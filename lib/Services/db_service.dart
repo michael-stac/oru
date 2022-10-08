@@ -194,4 +194,15 @@ class FDatabase {
       String userId) {
     return _userCollection.doc(userId).snapshots();
   }
+
+  static applyForJob(String userId, String jobId) async {
+    try {
+      await _jobCollection.doc(jobId).update({
+        DbConstants.appliedSeekers: FieldValue.arrayUnion([userId])
+      });
+      log('yess');
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

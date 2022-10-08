@@ -6,13 +6,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gigi/Models/job_model.dart';
 import 'package:gigi/Models/user_model.dart';
 import 'package:gigi/Providers/db_provider.dart';
 import 'package:gigi/Services/db_service.dart';
 import 'package:gigi/Services/storage_service.dart';
 import 'package:gigi/Utils/db_constants.dart';
+import 'package:gigi/Utils/router.dart';
+import 'package:gigi/Widgets/custom_modal.dart';
 import 'package:gigi/Widgets/custom_notification.dart';
 import 'package:gigi/Widgets/custom_text_formfield.dart';
+import 'package:gigi/main_activity.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -20,13 +24,16 @@ import '../../../Widgets/custom_button.dart';
 import '../../Styles/colors.dart';
 
 class JobApplication extends StatefulWidget {
-  const JobApplication({Key? key}) : super(key: key);
+  const JobApplication({Key? key, required this.job}) : super(key: key);
+
+  final JobModel job;
 
   @override
   State<JobApplication> createState() => _JobApplicationState();
 }
 
 class _JobApplicationState extends State<JobApplication> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<DbProvider>(context).currentUser;
@@ -422,7 +429,7 @@ class _JobApplicationState extends State<JobApplication> {
                           customButton(context,
                               textColor: AppColor.white,
                               bgColor: AppColor.primaryColor,
-                              onTap: () {},
+                              onTap: () => _handleApplication(user.id),
                               text: 'Submit')
                         ],
                       );
@@ -541,5 +548,22 @@ class _JobApplicationState extends State<JobApplication> {
         context: context, id: userId, key: DbConstants.profilePic, value: sr);
 
     await Provider.of<DbProvider>(context, listen: false).setCurrentUser();
+  }
+
+  void _handleApplication(String userId) async {
+    setState(() {
+      isLoading = true;
+    });
+    await FDatabase.applyForJob(userId, widget.job.id);
+    Notifications.showCustomDialogue(
+      context: context,
+      message: 'Success',
+      subMessage: 'You have successfuly applied for the role',
+      onOkClicked: () => nextPageOnly(context, page: MainActivityPage()),
+      onCancelClicked: () {},
+    );
+    setState(() {
+      isLoading = false;
+    });
   }
 }
