@@ -4,6 +4,7 @@ class AppUser {
   final String email;
   final String id;
   final String imgUrl;
+  final UserMainProfile? mainProfile;
   final UserProfile? profile;
 
   AppUser({
@@ -13,9 +14,60 @@ class AppUser {
     required this.id,
     this.imgUrl = '',
     this.profile,
+    this.mainProfile,
   });
 }
 
+class UserMainProfile {
+  final String role;
+  final String about;
+  final String imgUrl;
+  final List<UserExperience>? experiences;
+  final List<UserEducation>? resumes;
+
+  UserMainProfile({
+    this.role = '',
+    this.about = '',
+    this.experiences,
+    this.resumes,
+    this.imgUrl = '',
+  });
+}
+
+class UserExperience {
+  final String startToEndDate;
+  final String location;
+  final String position;
+  final String company;
+
+  UserExperience({
+    required this.startToEndDate,
+    required this.location,
+    required this.position,
+    required this.company,
+  });
+}
+
+class UserEducation {
+  final String startToEndDate;
+  final String location;
+  final String course;
+  final String school;
+
+  UserEducation({
+    required this.startToEndDate,
+    required this.location,
+    required this.course,
+    required this.school,
+  });
+}
+
+// .
+// .
+// .
+// .
+// .
+// .
 class UserProfile {
   final String accountType;
   final String ocupationStatus;

@@ -51,12 +51,12 @@ class _MainActivityPageState extends State<MainActivityPage> {
             : AppBar(
                 elevation: 0,
                 titleSpacing: 0,
-                backgroundColor: AppColor.white,
+                backgroundColor: Colors.grey[200],
                 automaticallyImplyLeading: false,
                 actions: [
                   IconButton(
                       onPressed: () => nextPage(context, page: AddJobPage()),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add,
                         color: Colors.black,
                       )),

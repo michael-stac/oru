@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gigi/Models/job_model.dart';
 import 'package:gigi/Screens/Styles/colors.dart';
 import 'package:gigi/Widgets/custom_button.dart';
+import 'package:gigi/Widgets/custom_modal.dart';
 
 class JobDetail extends StatelessWidget {
   final JobModel job;
@@ -181,7 +182,7 @@ class JobDetail extends StatelessWidget {
               // ),
               customButton(
                 context,
-                onTap: () {},
+                onTap: () => _handleApply(context),
                 text: 'Apply Now',
                 bgColor: Colors.red[500],
                 textColor: AppColor.white,
@@ -230,5 +231,15 @@ class JobDetail extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _handleApply(BuildContext context) {
+    Notifications.showCustomQueryDialogue(
+        context: context,
+        onCancelClicked: () {},
+        onOkClicked: () {},
+        message: 'Are you sure?',
+        subMessage:
+            'Are you sure you want to apply for the ${job.title} role at ${job.companyName}');
   }
 }

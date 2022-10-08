@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gigi/Helpers/fire_b_helpers.dart';
 import 'package:gigi/Models/job_model.dart';
 import 'package:gigi/Models/user_model.dart';
 import 'package:gigi/Utils/db_constants.dart';
+import 'package:gigi/Widgets/custom_notification.dart';
 
 class FDatabase {
   static final _db = FirebaseFirestore.instance;
@@ -64,6 +66,13 @@ class FDatabase {
     final isBusiness = profile.accountType == AccountType.business;
     try {
       await _userCollection.doc(userId).update({
+        DbConstants.mainProfile: {
+          DbConstants.about: '',
+          DbConstants.resumes: [],
+          DbConstants.experiences: [],
+          DbConstants.role: '',
+          DbConstants.profile: '',
+        },
         DbConstants.profile: {
           DbConstants.accountType: profile.accountType,
           DbConstants.occupationStatus: profile.ocupationStatus,
@@ -162,5 +171,26 @@ class FDatabase {
     }
 
     return jobs;
+  }
+
+  static Future addPofileS({
+    required String id,
+    required BuildContext context,
+    required String key,
+    required value,
+  }) async {
+    try {
+      await _userCollection
+          .doc(id)
+          .update({'${DbConstants.mainProfile}.$key': value});
+      showCustomNotification(context, 'Update Successfull');
+    } catch (e) {
+      showCustomNotification(context, 'Update Failled --- $e');
+    }
+  }
+
+  static Stream<DocumentSnapshot<Map<String, dynamic>>> getUserSettings(
+      String userId) {
+    return _userCollection.doc(userId).snapshots();
   }
 }

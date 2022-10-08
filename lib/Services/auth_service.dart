@@ -70,4 +70,8 @@ class FAuth {
       return FAuthResponse(message: e.toString());
     }
   }
+
+  static Future logOut() async {
+    await _auth.signOut();
+  }
 }

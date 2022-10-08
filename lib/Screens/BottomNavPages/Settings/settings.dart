@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gigi/Services/auth_service.dart';
 import 'package:gigi/Utils/router.dart';
+import 'package:gigi/Widgets/custom_modal.dart';
+import 'package:gigi/splash_screen.dart';
 
 import '../../../Widgets/custom_button.dart';
 import '../../Styles/colors.dart';
@@ -341,106 +344,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 12),
                           child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => Dialog(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Stack(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 20),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            shape: BoxShape.rectangle,
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              const Image(
-                                                  image: AssetImage(
-                                                      "assets/images/done.png")),
-                                              const SizedBox(
-                                                height: 42.84,
-                                              ),
-                                              const Text(
-                                                "Are you sure?",
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Colors.black),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              const Text(
-                                                "Are you sure you want to Log out?",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.grey),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              customButton(context,
-                                                  onTap: () {},
-                                                  text: 'Yes',
-                                                  textColor: Colors.white,
-                                                  bgColor:
-                                                      AppColor.primaryColor),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Container(
-                                                  alignment: Alignment.center,
-                                                  padding:
-                                                      const EdgeInsets.all(15),
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: AppColor
-                                                              .primaryColor,
-                                                          width: 2),
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .all(
-                                                        Radius.circular(18),
-                                                      )),
-                                                  child: Text(
-                                                    "No",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: AppColor
-                                                            .primaryColor,
-                                                        fontSize: 16),
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
+                            onTap: _handleLogout,
                             child: Text(
                               "Log Out",
                               style: TextStyle(
@@ -481,5 +385,16 @@ class _SettingsPageState extends State<SettingsPage> {
         ],
       ),
     );
+  }
+
+  void _handleLogout() {
+    Notifications.showCustomQueryDialogue(
+        context: context,
+        onOkClicked: () async {
+          await FAuth.logOut();
+          nextPageOnly(context, page: SplashScreen());
+        },
+        onCancelClicked: () {},
+        image: 'assets/images/done.png');
   }
 }

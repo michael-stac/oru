@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -21,11 +23,21 @@ class _AddJobPageState extends State<AddJobPage> {
   TextEditingController location = TextEditingController();
   TextEditingController salaryPerHour = TextEditingController();
   TextEditingController jobType = TextEditingController();
-  TextEditingController companyLogo = TextEditingController();
+  // TextEditingController companyLogo = TextEditingController();
 
   List<String> requirements = [];
-  // TextEditingController homeScreenRole = TextEditingController();
 
+  List<String> brands = ['Nike', 'Google', 'Uber', 'Apple', 'Amazon'];
+  List<String> brandLogo = [
+    "assets/images/nike.png",
+    "assets/images/google.png",
+    "assets/images/uber.png",
+    "assets/images/apple.png",
+    "assets/images/amazon.jpg"
+  ];
+  // TextEditingController homeScreenRole = TextEditingController();
+  String? selectedBrand;
+  int? selectedIndex;
   bool isRecomended = false;
   bool isLoading = false;
   @override
@@ -51,7 +63,53 @@ class _AddJobPageState extends State<AddJobPage> {
             const SizedBox(height: 15),
             TitleAndtextForm(title: 'Job Location', controller: location),
             const SizedBox(height: 15),
-            TitleAndtextForm(title: 'Company Logo', controller: companyLogo),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: DropdownButton(
+                      value: selectedBrand,
+                      hint: Text('Select Company'),
+                      items: brands
+                          .map((brand) => DropdownMenuItem(
+                                value: brand,
+                                child: Text(
+                                  brand,
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (brand) {
+                        log(brand.toString());
+                        setState(() {
+                          selectedBrand = brand as String;
+                          selectedIndex = brands.indexOf(brand);
+                        });
+                        log(selectedIndex.toString());
+                      }),
+                ),
+                SizedBox(width: 30),
+                Column(
+                  children: [
+                    Text('Logo Preview'),
+                    Container(
+                      clipBehavior: Clip.antiAlias,
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 233, 232, 232),
+                        shape: BoxShape.circle,
+                      ),
+                      child: selectedIndex != null
+                          ? Image.asset(
+                              brandLogo[selectedIndex as int],
+                              fit: BoxFit.fitWidth,
+                            )
+                          : null,
+                    ),
+                  ],
+                )
+              ],
+            ),
             const SizedBox(height: 15),
             TitleAndtextForm(
                 title: 'Salary per hour', controller: salaryPerHour),
@@ -136,7 +194,7 @@ class _AddJobPageState extends State<AddJobPage> {
 
     final jobStatus = await FDatabase.addJobToDb(
       requirements: requirements,
-      companyLogo: companyLogo.text.trim(),
+      companyLogo: selectedIndex == null ? '' : brandLogo[selectedIndex as int],
       companyName: companyName.text.trim(),
       location: location.text.trim(),
       salaryPerHour: salaryPerHour.text.trim(),
@@ -152,7 +210,7 @@ class _AddJobPageState extends State<AddJobPage> {
       location.clear();
       salaryPerHour.clear();
       jobType.clear();
-      companyLogo.clear();
+      // companyLogo.clear();
     }
 
     setState(() => isLoading = false);

@@ -13,22 +13,28 @@ class DbProvider with ChangeNotifier {
     final user = await FDatabase.getCurrentUser()
         as DocumentSnapshot<Map<String, dynamic>>;
     _currentUser = AppUser(
-        name: user.get(DbConstants.name),
-        email: user.get(DbConstants.email),
-        id: user.get(DbConstants.id),
-        imgUrl: user.get(DbConstants.imgUrl),
-        isAuthenticated: user.get(DbConstants.isAuthenticated),
-        profile: UserProfile(
-          accountType: user.get(DbConstants.profile)[DbConstants.accountType],
-          address: user.get(DbConstants.profile)[DbConstants.address],
-          city: user.get(DbConstants.profile)[DbConstants.city],
-          gender: user.get(DbConstants.profile)[DbConstants.gender],
-          ocupationStatus:
-              user.get(DbConstants.profile)[DbConstants.occupationStatus],
-          businessName: user.get(DbConstants.profile)[DbConstants.businessName],
-          businessSector:
-              user.get(DbConstants.profile)[DbConstants.businessSector],
-        ));
+      name: user.get(DbConstants.name),
+      email: user.get(DbConstants.email),
+      id: user.get(DbConstants.id),
+      imgUrl: user.get(DbConstants.imgUrl),
+      isAuthenticated: user.get(DbConstants.isAuthenticated),
+      profile: UserProfile(
+        accountType: user.get(DbConstants.profile)[DbConstants.accountType],
+        address: user.get(DbConstants.profile)[DbConstants.address],
+        city: user.get(DbConstants.profile)[DbConstants.city],
+        gender: user.get(DbConstants.profile)[DbConstants.gender],
+        ocupationStatus:
+            user.get(DbConstants.profile)[DbConstants.occupationStatus],
+        businessName: user.get(DbConstants.profile)[DbConstants.businessName],
+        businessSector:
+            user.get(DbConstants.profile)[DbConstants.businessSector],
+      ),
+      mainProfile: UserMainProfile(
+        about: user.get(DbConstants.mainProfile)[DbConstants.about],
+        imgUrl: user.get(DbConstants.mainProfile)[DbConstants.profilePic],
+      ),
+    );
+    notifyListeners();
 
     log(_currentUser.toString());
   }
