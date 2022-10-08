@@ -304,7 +304,8 @@ class _JessicaMentorState extends State<JessicaMentor> {
                       textColor: AppColor.white,
                       bgColor: AppColor.primaryColor,
                       onTap: () {
-                    nextPage(context, page:  Lesson());
+                    nextPage(
+                        context, page:  const Lesson());
 
                       }, text: 'Proceed')
 

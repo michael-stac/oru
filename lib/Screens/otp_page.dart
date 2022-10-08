@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gigi/Screens/Authentication/CreateProfile/profile.dart';
 import 'package:gigi/Screens/Styles/colors.dart';
-import 'package:gigi/Services/auth_service.dart';
 import 'package:gigi/Services/otp_service.dart';
 import 'package:gigi/Utils/router.dart';
 import 'package:gigi/Widgets/custom_button.dart';
@@ -31,25 +30,53 @@ class _OtpPageState extends State<OtpPage> {
   TextEditingController node4Contoller = TextEditingController();
 
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.white,
+      appBar: AppBar(
+        backgroundColor: AppColor.white,
+        elevation: 0,
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        // automaticallyImplyLeading: false,
+      ),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Verify Otp',
               style: TextStyle(
-                fontSize: 19,
+                fontSize: 26,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+            const SizedBox(
+              height: 90,
             ),
             Row(
               children: [
                 Expanded(
                     child: TextField(
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColor.primaryColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(18)),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(
+                          color: AppColor.primaryColor,
+                          width: 2,
+                        ),
+                      )),
                   keyboardType: TextInputType.number,
                   controller: node1Contoller,
                   focusNode: node1,
@@ -60,6 +87,20 @@ class _OtpPageState extends State<OtpPage> {
                 OtpPage.size,
                 Expanded(
                     child: TextField(
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColor.primaryColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(18)),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(
+                          color: AppColor.primaryColor,
+                          width: 2,
+                        ),
+                      )),
                   keyboardType: TextInputType.number,
                   controller: node2Contoller,
                   focusNode: node2,
@@ -70,6 +111,20 @@ class _OtpPageState extends State<OtpPage> {
                 OtpPage.size,
                 Expanded(
                     child: TextField(
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColor.primaryColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(18)),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(
+                          color: AppColor.primaryColor,
+                          width: 2,
+                        ),
+                      )),
                   keyboardType: TextInputType.number,
                   controller: node3Contoller,
                   focusNode: node3,
@@ -80,13 +135,27 @@ class _OtpPageState extends State<OtpPage> {
                 OtpPage.size,
                 Expanded(
                     child: TextField(
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColor.primaryColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(18)),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(
+                          color: AppColor.primaryColor,
+                          width: 2,
+                        ),
+                      )),
                   keyboardType: TextInputType.number,
                   controller: node4Contoller,
                   focusNode: node4,
                 )),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 120),
             customButton(
               context,
               onTap: _verifyOtp,
