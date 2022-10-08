@@ -12,118 +12,110 @@ class Applications extends StatefulWidget {
   State<Applications> createState() => _ApplicationsState();
 }
 
-final mentors = [
-  {'name': "Haley Jessica", 'image': "assets/images/tick.png"}
-];
+
 
 class _ApplicationsState extends State<Applications> {
   bool _value = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {final mentors = [
+    {'name': "Haley Jessica", 'image': "assets/images/mentor.png"},
+    {'name': "Richard Tams", 'image': "assets/images/richard.png"},
+    {'name': "Wisdom Nwo..", 'image': "assets/images/wisdom.png"},
+    {'name': "Sokari Gills", 'image': "assets/images/gills.png"},
+    {'name': "Cynthia Ebun", 'image': "assets/images/ebun.png"},
+    {'name': "Mercy Muna", 'image': "assets/images/muna.png"},
+
+
+  ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         automaticallyImplyLeading: false,
       ),
-      body: Column(
-        children: [
-          Text('Hello'),
-          GridView.builder(
-              shrinkWrap: true,
-              itemCount: 5,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-              ),
-              itemBuilder: (_, pos) {
-                final mentor = mentors[pos];
-                return GestureDetector(
-                  onTap: () {
-                    nextPage(context, page: const JessicaMentor());
-                  },
-                  child: SizedBox(
-                    width: 185,
-                    height: 185,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          shape: BoxShape.rectangle,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 5.0,
-                            )
-                          ]),
-                      child: Column(
-                        children: [
-                          Container(
-                              padding:
-                                  const EdgeInsets.only(left: 120, top: 19),
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    _value = !_value;
-                                  });
-                                },
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.blue),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: _value
-                                        ? const Icon(
-                                            Icons.check,
-                                            size: 10.0,
-                                            color: Colors.white,
-                                          )
-                                        : const Icon(
-                                            Icons.check_box_outline_blank,
-                                            size: 10.0,
-                                            color: Colors.blue,
-                                          ),
-                                  ),
-                                ),
-                              )),
-                          const Image(
-                              image: AssetImage("assets/images/mentor.png")),
-                          const SizedBox(
-                            height: 14,
-                          ),
-                          Text(
-                            mentor['names'] as String,
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: AppColor.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 9,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "UX Designer",
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: AppColor.gray,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const Image(
-                                  image: AssetImage("assets/images/tick.png"))
-                            ],
-                          )
-                        ],
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 17),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Mentorship Hub', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: AppColor.black),),
+                  Text('Select a mentor and get started', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColor.gray),),
+
+                  SizedBox(height: 20,),
+                  GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: mentors.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
                       ),
-                    ),
-                  ),
-                );
-              }),
+                      itemBuilder: (_, pos) {
+                        final mentor = mentors[pos];
+                        return GestureDetector(
+                          onTap: () {
+                            nextPage(context, page: const JessicaMentor());
+                          },
+                          child: SizedBox(
+                            width: 185,
+                            height: 185,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  shape: BoxShape.rectangle,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black38,
+                                      blurRadius: 5.0,
+                                    )
+                                  ]),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 30,),
+                                   Image(
+                                      image: AssetImage(mentor["image"] as String)),
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  Text(
+                                    mentor['name'] as String,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: AppColor.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 9,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "UX Designer",
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            color: AppColor.gray,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const Image(
+                                          image: AssetImage("assets/images/tick.png"))
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                ],
+              ),
+            ),
+          )
         ],
       ),
       // body: CustomScrollView(
