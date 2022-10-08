@@ -39,7 +39,13 @@ class _OtpPageState extends State<OtpPage> {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: Column(
           children: [
-            Text('Hu there'),
+            Text(
+              'Verify Otp',
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             Row(
               children: [
                 Expanded(

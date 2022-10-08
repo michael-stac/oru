@@ -72,6 +72,7 @@ class FDatabase {
           DbConstants.experiences: [],
           DbConstants.role: '',
           DbConstants.profile: '',
+          DbConstants.profilePic: '',
         },
         DbConstants.profile: {
           DbConstants.accountType: profile.accountType,

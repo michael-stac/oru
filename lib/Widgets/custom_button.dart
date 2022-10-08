@@ -11,9 +11,10 @@ Widget customButton(BuildContext context,
   return GestureDetector(
     onTap: isLoading ? () {} : onTap,
     child: Container(
+        height: 50,
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
-       
+
         // padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             color: isLoading

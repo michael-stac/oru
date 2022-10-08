@@ -10,6 +10,7 @@ import 'package:gigi/main_activity.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../Providers/db_provider.dart';
 import '../../Utils/message.dart';
 import '../../Utils/router.dart';
 import '../../Widgets/custom_button.dart';
@@ -302,6 +303,8 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => isLoading = false);
 
     if (status.isSuccess) {
+      await Provider.of<DbProvider>(context, listen: false).setCurrentUser();
+
       nextPageOnly(context, page: MainActivityPage());
     }
   }

@@ -4,8 +4,10 @@ import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_text_form_field/flutter_text_form_field.dart';
 import 'package:gigi/Models/user_model.dart';
+import 'package:gigi/Providers/db_provider.dart';
 import 'package:gigi/Services/db_service.dart';
 import 'package:gigi/Widgets/custom_notification.dart';
+import 'package:provider/provider.dart';
 
 import '../../../Utils/router.dart';
 import '../../../Widgets/custom_button.dart';
@@ -469,6 +471,7 @@ class _CreateProfileState extends State<CreateProfile> {
     showCustomNotification(context, status.message);
     setState(() => isLoading = false);
     if (status.isSuccess) {
+      await Provider.of<DbProvider>(context, listen: false).setCurrentUser();
       nextPageOnly(context, page: MainActivityPage());
     }
   }

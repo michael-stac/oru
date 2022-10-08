@@ -97,10 +97,12 @@ class _JobsState extends State<Jobs> {
                               shape: BoxShape.circle,
                               color: Colors.grey[100],
                             ),
-                            child: CachedNetworkImage(
-                              imageUrl: user.mainProfile!.imgUrl,
-                              fit: BoxFit.cover,
-                            ),
+                            child: user.mainProfile!.imgUrl == ''
+                                ? null
+                                : CachedNetworkImage(
+                                    imageUrl: user.mainProfile!.imgUrl,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         )
                       ],

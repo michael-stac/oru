@@ -39,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   // TODO: implement init users
   Future initalizeUser() async {
+    // FirebaseAuth.instance.signOut();
     final dbProvider = Provider.of<DbProvider>(context, listen: false);
     if (FirebaseAuth.instance.currentUser != null) {
       await dbProvider.setCurrentUser();

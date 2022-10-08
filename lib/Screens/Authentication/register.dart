@@ -210,9 +210,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           context,
                           text: 'SIGN UP',
                           textColor: AppColor.white,
-                          onTap: () {
-                            nextPage(context, page: MainActivityPage());
-                          },
+                          onTap: _handleRegister,
                           bgColor: AppColor.primaryColor,
                         ),
 

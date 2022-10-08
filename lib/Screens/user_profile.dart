@@ -89,10 +89,12 @@ class _ProfileState extends State<Profile> {
                                                 color: Colors.grey
                                                     .withOpacity(0.4))
                                           ]),
-                                      child: CachedNetworkImage(
-                                        imageUrl: mainProfile.imgUrl,
-                                        fit: BoxFit.cover,
-                                      ),
+                                      child: mainProfile.imgUrl == ''
+                                          ? null
+                                          : CachedNetworkImage(
+                                              imageUrl: mainProfile.imgUrl,
+                                              fit: BoxFit.cover,
+                                            ),
                                     ),
                                     Positioned(
                                       bottom: 0,
