@@ -17,6 +17,7 @@ class _MessagesState extends State<Messages> {
       body: Padding(
         padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
             Row(
@@ -33,7 +34,30 @@ class _MessagesState extends State<Messages> {
             SizedBox(height: 40, child: TextFormField(decoration: InputDecoration(),),),
             Text('Companies'),
             Row(
-
+              children: [
+                Image.asset('assets/images/olutu.png'),
+                const SizedBox(width: 15),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: const [
+                        Text('olotu Square'),
+                        Spacer(),
+                        Text('11:45am')
+                      ],
+                    ),
+                    Row(
+                      children: const [
+                        Text('Are you available for an interv...'),
+                        Spacer(),
+                        Text('4')
+                      ],
+                    ),
+                    
+                  ],
+                )
+              ],
             )
           ],
         ),
